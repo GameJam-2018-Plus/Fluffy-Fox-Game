@@ -1,34 +1,35 @@
 require 'animation'
 require 'stage'
+require 'menu'
 stage = {}
 current_stage = 0
+PAUSE = false
+
 function love.load ()
     loadStage(0)
 end
 
 function love.update ( dt )
-	
-    switch = stage:update(dt)
-    if switch ~= -1 then
-        loadStage(switch)
-    end
-	--exit
-    function love.mousepressed( x, y)   
-        if x > 200 and x < 500 and y > 600 and y < 700 then 
-            -- love.event.quit()
-            loadStage(1)
-        end
-    end
+	if love.keyboard.isDown("escape") and current_stage ~= 0 then
+		PAUSE = not PAUSE
+		love.timer.sleep(.42)
+	end
+	if not PAUSE then	
+		switch = stage:update(dt)
+		if switch ~= -1 then
+			loadStage(switch)
+		end
+	end	
 end
 
 function love.draw()
 	--bga draw
     stage:draw()
 	--gui sketch
-    if current_stage == 0 then
-	    love.graphics.rectangle("line", 0, 0, 1024, 768)
-	    love.graphics.rectangle("line", 200, 600, 300, 100)
+    if current_stage == 0 or PAUSE then
+		menu(PAUSE)
     end
+	
 end	
 
 
