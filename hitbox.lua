@@ -1,7 +1,7 @@
 Hitbox = {}
 
 function Hitbox:new(x,y,w,h)
-    obj = {}
+    local obj = {}
     obj.x = x
     obj.y = y
     obj.w = w

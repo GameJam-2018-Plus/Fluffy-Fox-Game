@@ -8,7 +8,7 @@ Stage = {}
 
 -- Constructor for the stage
 function Stage:new(music, bg, walk_height, actors)
-    obj = {}
+    local obj = {}
     obj.music = love.audio.newSource(music, "stream")
     obj.bg = bg
     obj.walk_height = walk_height

@@ -31,8 +31,12 @@ function Animation:update(dt)
     end
 end
 
+function Animation:reset()
+    self.currentTime = 0
+end
+
 -- Draw current quad of the sprite sheet
-function Animation:draw()
+function Animation:draw(x,y)
     local spriteNum = math.floor(self.currentTime / self.duration * #self.quads) + 1
-    	love.graphics.draw(self.spriteSheet, self.quads[spriteNum])
+    	love.graphics.draw(self.spriteSheet, self.quads[spriteNum],x,y)
 end
