@@ -16,13 +16,16 @@ function Actor:new(x, y, anims_path, vel, max_health, team)
     obj.anims.idle = Animation:new(anims_path .. "/idle.png",def_w,def_h,def_duration)
     obj.anims.walk = Animation:new(anims_path .. "/walk.png",def_w,def_h,def_duration)
     obj.anims.slash = Animation:new(anims_path .. "/slash.png",def_w,def_h,def_duration)
-    obj.w = obj.anims.idle.quads[1].width
-    obj.h = obj.anims.idle.quads[1].height
+    -- Take size from first idle quads
+  --  obj.w, obj.h = obj.anims.idle.quads[1]:getTextureDimensions()
+--    obj.w = obj.anims.idle.quads[1].width
+ --   obj.h = obj.anims.idle.quads[1].height
     obj.anim_state = "idle"
     obj.facing = true
     obj.max_health = max_health or 20
     obj.health = max_health
-    obj.hbox = Hitbox:new(obj.x, obj.y, obj.w, obj.h)
+   -- obj.hbox = Hitbox:new(obj.x, obj.y, obj.w, obj.h)
+   -- obj.abox = Hitbox:new(obj.x + obj.w, obj.y, obj.w / 2, obj.h)
     obj.team = team or 2
     obj.logic_state = "default"
     self.__index = self
@@ -64,3 +67,16 @@ function Actor:ki()
         -- KI-Skript
     end
 end
+
+function Actor:get_box(ident)
+    if ident == "att" then
+        if facing then
+            return self.abox
+        else
+            return Hitbox:new(self.abox.x - 1.5 * self.w, self.abox.y, self.abox.w, self.abox.h)
+        end
+    elseif ident == "hurt" then
+        return self.hbox
+    end
+end
+

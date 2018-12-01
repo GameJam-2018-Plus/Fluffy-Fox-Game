@@ -26,6 +26,7 @@ function Stage:update(dt)
     for _,a in pairs(self.actors) do
         a:update(dt)
     end
+    self:check_collision()
     return -1
 end
 
@@ -54,5 +55,25 @@ function loadStage(index)
     end
     if index == 3 then
 	stage = stage_3()
+    end
+end
+
+function Stage:check_collision()
+    for _, a in pairs(self.actors) do
+        if a.logic_state == "slash" then
+            for _, b in pairs(self.actors) do
+                if a:get_box("att"):collide(b:get_box("hurt")) then
+                    b:get_hit()
+                end
+            end
+        end
+    end
+end
+
+function Stage:get_player()
+    for _, a in pairs(self.actors) do
+        if a.team == 1 then
+            return a
+        end
     end
 end
