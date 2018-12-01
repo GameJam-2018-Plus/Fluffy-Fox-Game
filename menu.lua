@@ -32,8 +32,13 @@ function menu (pause)
 		font = love.graphics.newFont("assets/fonts/BrookeS8.ttf" , 80)
 		love.graphics.setFont(font)
 		
-		love.graphics.print("VOLUME", 410, 352)
-		love.graphics.print("Credits", 420, 432)
+		if not chVol then
+			love.graphics.print("VOLUME", 410, 352)
+			love.graphics.print("CREDITS", 420, 432)
+		else
+			love.graphics.print("+  -", 450, 352)
+			love.graphics.print("CONFIRM", 420, 432)
+		end
 		love.graphics.print("BACK", 450, 512)
 	end
 	
