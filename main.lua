@@ -28,6 +28,10 @@ function love.draw()
 	--gui sketch
     if current_stage == 0 or PAUSE then
 		menu(PAUSE)
+	end
+	if current_stage ~= 0 and not PAUSE then
+		function love.mousepressed( x, y) 
+		end
     end
 	
 end	
