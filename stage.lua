@@ -28,7 +28,6 @@ function Stage:update(dt)
     for _,a in pairs(self.actors) do
         a:update(dt)
     end
-    self:check_collision()
     return -1
 end
 
@@ -48,7 +47,7 @@ function loadStage(index)
     current_stage = index
     if next(stage) ~= nil then stage:quit() end
     if index == 0 then
-	stage = stage_0()
+	    stage = stage_0()
     end
     if index == 1 then
         stage = stage_1()
@@ -61,14 +60,10 @@ function loadStage(index)
     end
 end
 
-function Stage:check_collision()
-    for _, a in pairs(self.actors) do
-        if a.logic_state == "slash" then
-            for _, b in pairs(self.actors) do
-                if a:get_box("att"):collide(b:get_box("hurt")) then
-                    b:get_hit()
-                end
-            end
+function Stage:hit(box)
+    for _, b in pairs(self.actors) do
+        if box:collide(b:get_box("hurt")) then
+            b:get_hit()
         end
     end
 end
@@ -79,6 +74,7 @@ function Stage:get_player()
             return a
         end
     end
+    print("no player, wtf?")
 end
 
 function Stage:move_camera()

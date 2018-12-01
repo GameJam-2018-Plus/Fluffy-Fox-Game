@@ -17,6 +17,6 @@ function Hitbox:collide(box)
             box.y < self.y+self.h
 end
 
-function Hitbox:draw()
-    love.graphics.rectangle("line", self.x,self.y,self.w,self.h)
+function Hitbox:draw(camera)
+    love.graphics.rectangle("line", self.x - camera.x, self.y - camera.y, self.w,self.h)
 end

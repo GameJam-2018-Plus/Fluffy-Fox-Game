@@ -20,6 +20,8 @@ function Animation:new(image, width, height, fps)
 
     animation.fps = fps or 24
     animation.currentTime = 0
+    animation.currentFrame = 1
+    animation.numFrames = #animation.quads
 
     self.__index = self
     return setmetatable(animation, self)
@@ -30,8 +32,10 @@ function Animation:update(dt)
    self.currentTime = self.currentTime + dt
    if self.currentTime >= #self.quads / self.fps then
         self.currentTime = self.currentTime - #self.quads / self.fps
+        self.currentFrame = math.floor(self.fps * self.currentTime) + 1
         return 1
     end
+    self.currentFrame = math.floor(self.fps * self.currentTime) + 1
     return 0
 end
 
@@ -41,6 +45,5 @@ end
 
 -- Draw current quad of the sprite sheet
 function Animation:draw(x,y,x_scale,x_offset)
-    local spriteNum = math.floor(self.fps * self.currentTime) + 1
-    	love.graphics.draw(self.spriteSheet, self.quads[spriteNum],x,y,0,x_scale,1,x_offset,0)
+    love.graphics.draw(self.spriteSheet, self.quads[self.currentFrame],x,y,0,x_scale,1,x_offset,0)
 end
