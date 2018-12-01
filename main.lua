@@ -28,11 +28,31 @@ function love.draw()
     stage:draw()
 	--gui sketch
     if current_stage == 0 or PAUSE then
-		--menu(PAUSE)
+		menu(PAUSE)
 	end
 	if current_stage ~= 0 and not PAUSE then
 		function love.mousepressed( x, y) 
 		end
+	elseif show_option then
+		function love.mousepressed( x, y) 
+			-- Volumen
+			if x > 336 and x < 694 and y > 352 and y < 419 then 
+				if (not pause) then
+					
+				end	
+			end
+			-- CREDITS
+			if x > 403 and x < 623 and y > 432 and y < 519 then 
+				
+			end
+			-- Back
+			if x > 450 and x < 586 and y > 512 and y < 579 then 
+				show_option = false
+			end
+		end
+	-- elseif show_option then
+	-- 	function love.mousepressed( x, y) 
+	-- 	end
     end
 	
 end	

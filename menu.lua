@@ -4,23 +4,38 @@ function menu (pause)
 	local dark = love.graphics.newImage("assets/darkScreen.png")
 	love.graphics.draw(dark)
 	end
-	--GUI
-	font = love.graphics.newFont("assets/BrookeS8.ttf" , 200)
-	love.graphics.setFont(font)
-	love.graphics.rectangle("line", 0, 0, 1024, 768)
-	
-	love.graphics.print("AUTEURISKA", 120, 80)
-	
-	font = love.graphics.newFont("assets/BrookeS8.ttf" , 80)
-	love.graphics.setFont(font)
-	if (not pause) then
-		love.graphics.print("START GAME", 336, 352)
-		--love.graphics.rectangle("line", 334, 352, 360, 67)
+	if not show_option then
+		--GUI
+		font = love.graphics.newFont("assets/BrookeS8.ttf" , 200)
+		love.graphics.setFont(font)
+		love.graphics.rectangle("line", 0, 0, 1024, 768)
+		
+		love.graphics.print("AUTEURISKA", 120, 80)
+		
+		font = love.graphics.newFont("assets/BrookeS8.ttf" , 80)
+		love.graphics.setFont(font)
+		if (not pause) then
+			love.graphics.print("START GAME", 336, 352)
+			--love.graphics.rectangle("line", 334, 352, 360, 67)
+		end
+		love.graphics.print("OPTIONS", 408, 432)
+		--love.graphics.rectangle("line", 403, 432, 220, 67)
+		love.graphics.print("QUIT", 456, 512)
+		--love.graphics.rectangle("line", 450, 512, 136, 67)
+	else
+		font = love.graphics.newFont("assets/BrookeS8.ttf" , 200)
+		love.graphics.setFont(font)
+		love.graphics.rectangle("line", 0, 0, 1024, 768)
+		
+		love.graphics.print("OPTIONS", 245, 80)
+		
+		font = love.graphics.newFont("assets/BrookeS8.ttf" , 80)
+		love.graphics.setFont(font)
+		
+		love.graphics.print("VOLUME", 410, 352)
+		love.graphics.print("Credits", 420, 432)
+		love.graphics.print("BACK", 450, 512)
 	end
-	love.graphics.print("OPTIONS", 408, 432)
-	--love.graphics.rectangle("line", 403, 432, 220, 67)
-	love.graphics.print("QUIT", 456, 512)
-	--love.graphics.rectangle("line", 450, 512, 136, 67)
 	
 	
 	
@@ -33,7 +48,7 @@ function menu (pause)
 		end
 		-- OPTIONS
 		if x > 403 and x < 623 and y > 432 and y < 519 then 
-			print("OPTIONS!")
+			show_option = true
 		end
 		-- QUIT
 		if x > 450 and x < 586 and y > 512 and y < 579 then 
