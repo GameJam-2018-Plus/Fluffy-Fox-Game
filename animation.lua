@@ -2,7 +2,7 @@
 Animation = {}
 
 -- Constructor reading image path and generating render quads
-function Animation:new(image, width, height, duration)
+function Animation:new(image, width, height, fps)
     local animation = {}
     animation.w = width
     animation.h = height
@@ -18,7 +18,7 @@ function Animation:new(image, width, height, duration)
         end
     end
 
-    animation.duration = duration or 1
+    animation.fps = fps or 24
     animation.currentTime = 0
 
     self.__index = self
@@ -28,9 +28,11 @@ end
 -- Set the timestamps via the delta time, for correct render quad selection
 function Animation:update(dt)
    self.currentTime = self.currentTime + dt
-   if self.currentTime >= self.duration then
-        self.currentTime = self.currentTime - self.duration
+   if self.currentTime >= #self.quads / self.fps then
+        self.currentTime = self.currentTime - #self.quads / self.fps
+        return 1
     end
+    return 0
 end
 
 function Animation:reset()
@@ -39,6 +41,6 @@ end
 
 -- Draw current quad of the sprite sheet
 function Animation:draw(x,y,x_scale,x_offset)
-    local spriteNum = math.floor(self.currentTime / self.duration * #self.quads) + 1
+    local spriteNum = math.floor(self.fps * self.currentTime) + 1
     	love.graphics.draw(self.spriteSheet, self.quads[spriteNum],x,y,0,x_scale,1,x_offset,0)
 end
