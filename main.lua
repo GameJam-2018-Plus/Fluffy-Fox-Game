@@ -20,6 +20,7 @@ function love.update ( dt )
 			loadStage(switch)
 		end
 	end	
+	collectgarbage()
 end
 
 function love.draw()
