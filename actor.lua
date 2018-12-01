@@ -42,6 +42,7 @@ function Actor:update(dt)
     if self.team == 1 then
         if love.keyboard.isDown("a") then self:move(-5) 
         elseif love.keyboard.isDown("d") then self:move(5)
+        elseif love.keyboard.isDown("space") then self:hit()
         else self:idle() end
     end
     self.anims[self.anim_state]:update(dt)
@@ -72,6 +73,10 @@ function Actor:get_hit()
 end
 
 function Actor:hit()
+    if self.anim_state ~= "slash" then
+        self.anims[self.anim_state]:reset()
+    end
+    self.anim_state = "slash"
     -- starts hitting movement
  --   hit_check() -- Checks, what actors got hit.
 end
