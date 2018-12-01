@@ -1,4 +1,9 @@
 function menu (pause)
+	--DarkScreen
+	if pause then
+	local dark = love.graphics.newImage("assets/darkScreen.png")
+	love.graphics.draw(dark)
+	end
 	--GUI
 	font = love.graphics.newFont("assets/BrookeS8.ttf" , 200)
 	love.graphics.setFont(font)
