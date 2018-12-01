@@ -4,6 +4,8 @@ Animation = {}
 -- Constructor reading image path and generating render quads
 function Animation:new(image, width, height, duration)
     local animation = {}
+    animation.w = width
+    animation.h = height
     -- Sprite sheet with all frames on one image
     animation.spriteSheet = love.graphics.newImage(image);
     -- Boundaries of single images
@@ -36,7 +38,7 @@ function Animation:reset()
 end
 
 -- Draw current quad of the sprite sheet
-function Animation:draw(x,y)
+function Animation:draw(x,y,x_scale,x_offset)
     local spriteNum = math.floor(self.currentTime / self.duration * #self.quads) + 1
-    	love.graphics.draw(self.spriteSheet, self.quads[spriteNum],x,y)
+    	love.graphics.draw(self.spriteSheet, self.quads[spriteNum],x,y,0,x_scale,1,x_offset,0)
 end

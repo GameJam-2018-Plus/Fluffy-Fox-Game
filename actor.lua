@@ -1,8 +1,8 @@
 require 'hitbox'
 
 Actor = {}
-def_w = 16
-def_h = 18
+def_w = 200
+def_h = 200
 def_duration = 1
 
 -- x, y = pos,  anims = vector of Animation indexed by "idle" "walk" "slash"
@@ -16,16 +16,13 @@ function Actor:new(x, y, anims_path, vel, max_health, team)
     obj.anims.idle = Animation:new(anims_path .. "/idle.png",def_w,def_h,def_duration)
     obj.anims.walk = Animation:new(anims_path .. "/walk.png",def_w,def_h,def_duration)
     obj.anims.slash = Animation:new(anims_path .. "/slash.png",def_w,def_h,def_duration)
-    -- Take size from first idle quads
-  --  obj.w, obj.h = obj.anims.idle.quads[1]:getTextureDimensions()
---    obj.w = obj.anims.idle.quads[1].width
- --   obj.h = obj.anims.idle.quads[1].height
+    obj.w, obj.h = def_w, def_h
     obj.anim_state = "idle"
     obj.facing = true
     obj.max_health = max_health or 20
     obj.health = max_health
-   -- obj.hbox = Hitbox:new(obj.x, obj.y, obj.w, obj.h)
-   -- obj.abox = Hitbox:new(obj.x + obj.w, obj.y, obj.w / 2, obj.h)
+    obj.hbox = Hitbox:new(obj.x, obj.y, obj.w, obj.h)
+    obj.abox = Hitbox:new(obj.x + obj.w, obj.y, obj.w / 2, obj.h)
     obj.team = team or 2
     obj.logic_state = "default"
     self.__index = self
@@ -33,14 +30,19 @@ function Actor:new(x, y, anims_path, vel, max_health, team)
     return setmetatable(obj, self)
 end
 
-function Actor:draw()
-    self.anims[self.anim_state]:draw(self.x,self.y)
+function Actor:draw(camera)
+    if self.facing then
+        self.anims[self.anim_state]:draw(self.x-camera.x,self.y-camera.y)
+    else
+        self.anims[self.anim_state]:draw(self.x-camera.x,self.y-camera.y,-1,self.w)
+    end
 end
 
 function Actor:update(dt)
     if self.team == 1 then
         if love.keyboard.isDown("a") then self:move(-5) 
-        elseif love.keyboard.isDown("d") then self:move(5) end
+        elseif love.keyboard.isDown("d") then self:move(5)
+        else self:idle() end
     end
     self.anims[self.anim_state]:update(dt)
 end
@@ -51,6 +53,18 @@ function Actor:move(x)
     end
     self.anim_state = "walk"
     self.x = self.x + x
+    if x > 0 then
+        self.facing = true
+    else
+        self.facing = false
+    end
+end
+
+function Actor:idle()
+    if self.anim_state ~= "idle" then
+        self.anims[self.anim_state]:reset()
+    end
+    self.anim_state = "idle"
 end
 
 function Actor:get_hit()
