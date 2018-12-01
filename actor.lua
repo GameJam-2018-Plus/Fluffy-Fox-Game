@@ -13,9 +13,9 @@ function Actor:new(x, y, anims_path, vel, max_health, team)
     obj.y = y
     obj.anims_path = anims_path
     obj.anims = {}
-    obj.anims.idle = Animation:new(anims_path .. "/idle.png",def_w,def_h,def_duration)
-    obj.anims.walk = Animation:new(anims_path .. "/walk.png",def_w,def_h,def_duration)
-    obj.anims.slash = Animation:new(anims_path .. "/slash.png",def_w,def_h,def_duration)
+    obj.anims.idle = Animation:new( "/assets/"..anims_path .."/idle.png",def_w,def_h,def_duration)
+    obj.anims.walk = Animation:new( "/assets/"..anims_path .."/walk.png",def_w,def_h,def_duration)
+    obj.anims.slash = Animation:new("/assets/"..anims_path .."/slash.png",def_w,def_h,def_duration)
     obj.w, obj.h = def_w, def_h
     obj.anim_state = "idle"
     obj.facing = true
