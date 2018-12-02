@@ -27,6 +27,8 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox, sounds)
     obj.team = team or 2
     obj.alive = true
     obj.sounds = sounds
+    obj.vel = vel
+    obj.xv = -5
     self.__index = self
 
     return setmetatable(obj, self)
