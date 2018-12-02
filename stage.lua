@@ -26,7 +26,7 @@ function Stage:update(dt)
     end
     self.bg:update(dt)
     for _,a in pairs(self.actors) do
-        a:update(dt)
+        a:update(dt,stage)
     end
     return -1
 end

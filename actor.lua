@@ -48,7 +48,7 @@ function Actor:update(dt, stage)
         elseif love.keyboard.isDown("d") then self:move(5)
         elseif love.keyboard.isDown("space") then self:hit()
         elseif self.anim_state ~= "slash" or wrap == 1 then self:idle()
-        elseif self.anims.slash.current_frame == 25 then stage:hit(self:get_box("att")) end
+        elseif self.anims.slash.currentFrame == 25 then stage:hit(self:get_box("att")) end
     end
 end
 
