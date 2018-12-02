@@ -16,5 +16,5 @@ function stage_2()
 	local bg = Animation:new("assets/bg/stage_2.png", 4608, 768,1)
         local actors = {}
         table.insert(actors, Actor:new(0,400,'player',666,3,1,Hitbox:new(75,50,50,140),Hitbox:new(140,50,60,100),player_sounds))
-        return Stage:new("assets/audio/Dungeon.ogg", bg, 200, actors)
+        return Stage:new("assets/audio/Dungeons.ogg", bg, 200, actors)
 end
