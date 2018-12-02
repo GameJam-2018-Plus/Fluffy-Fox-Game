@@ -42,8 +42,8 @@ function Actor:draw(camera)
     else
         self.anims[self.anim_state]:draw(self.x-camera.x,self.y-camera.y,-1,self.w)
     end
-    self:get_box("hurt"):draw(camera)
-    self:get_box("att"):draw(camera)
+    --self:get_box("hurt"):draw(camera)
+    --self:get_box("att"):draw(camera)
 end
 
 function Actor:update(dt, stage)

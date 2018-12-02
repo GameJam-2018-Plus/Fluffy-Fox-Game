@@ -12,9 +12,13 @@ function stage_2()
 	enemy_sounds.ouch = love.audio.newSource("/assets/sound/silence.wav","stream")
 	enemy_sounds.direct_hit = love.audio.newSource("/assets/sound/silence.wav","stream")
 	enemy_sounds.death = love.audio.newSource("/assets/sound/silence.wav","stream")
+	
+	local actors = {}
+	table.insert(actors, Actor:new(100,400,'lego', 666,3,2,Hitbox:new(75,50,50,140),Hitbox:new(140,50,60,100),enemy_sounds))
+	table.insert(actors, Actor:new(800, 200, 'tire', 0,2,3,Hitbox:new(50,50,50,50),Hitbox:new(50,50,50,50),enemy_sounds))
+	table.insert(actors, Actor:new(1200, 400, 'oven', 0,2,8,Hitbox:new(0,0,200,200),Hitbox:new(50,50,50,50),enemy_sounds))
 
 	local bg = Animation:new("assets/bg/stage_2.png", 4608, 768,1)
-        local actors = {}
         table.insert(actors, Actor:new(0,400,'player',666,3,1,Hitbox:new(75,50,50,140),Hitbox:new(140,50,60,100),player_sounds))
         return Stage:new("assets/audio/Dungeons.ogg", bg, 200, actors)
 end

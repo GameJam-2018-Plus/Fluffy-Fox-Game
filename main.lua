@@ -10,6 +10,10 @@ function love.load ()
 end
 
 function love.update ( dt )
+	if love.keyboard.isDown("0") then current_stage = 0 end
+	if love.keyboard.isDown("1") then current_stage = 1 end
+	if love.keyboard.isDown("2") then current_stage = 2 end
+	if love.keyboard.isDown("3") then current_stage = 3 end
 	if love.keyboard.isDown("escape") and current_stage ~= 0 then
 		PAUSE = not PAUSE
 		chVol = false
