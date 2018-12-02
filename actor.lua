@@ -15,7 +15,7 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox)
     obj.anims_path = anims_path
     obj.anims = {}
     obj.anims.idle = Animation:new( "/assets/"..anims_path .."/idle.png",def_w,def_h,def_duration)
-    obj.anims.walk = Animation:new( "/assets/"..anims_path .."/walk.png",def_w,def_h,def_duration)
+    obj.anims.walk = Animation:new( "/assets/"..anims_path .."/walk.png",def_w,def_h,def_duration*2)
     obj.anims.slash = Animation:new("/assets/"..anims_path .."/slash.png",def_w,def_h,def_duration*3)
     obj.w, obj.h = def_w, def_h
     obj.anim_state = "idle"
@@ -25,6 +25,7 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox)
     obj.hbox = hbox
     obj.abox = abox
     obj.team = team or 2
+    obj.alive = true
     self.__index = self
 
     return setmetatable(obj, self)
@@ -74,7 +75,8 @@ end
 
 function Actor:get_hit()
     print("Hit detected")
-  --  self.health = self.health - 1
+    self.health = self.health - 1
+    if(self.health == 0) then print("Actor died") alive = false end
 end
 
 function Actor:hit()
