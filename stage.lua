@@ -28,6 +28,9 @@ function Stage:update(dt)
     for _,a in pairs(self.actors) do
         a:update(dt,stage)
     end
+    if not self:get_player().alive then
+        return current_stage
+    end
     return -1
 end
 
@@ -64,8 +67,10 @@ function Stage:hit(box)
     for _, b in pairs(self.actors) do
         if box:collide(b:get_box("hurt")) then
             b:get_hit()
+            return true
         end
     end
+    return false
 end
 
 function Stage:get_player()
