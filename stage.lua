@@ -28,9 +28,6 @@ function Stage:update(dt)
     for _,a in pairs(self.actors) do
         a:update(dt,stage)
     end
-    if not self:get_player().alive then
-        return current_stage
-    end
     return -1
 end
 
