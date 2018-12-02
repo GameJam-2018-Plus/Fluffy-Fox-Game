@@ -8,7 +8,7 @@ def_duration = 24
 
 -- x, y = pos,  anims = vector of Animation indexed by "idle" "walk" "slash"
 -- vel ???, team = tag 1 for player, tag 2 for enemy
-function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox)
+function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox, sounds)
     local obj = {}
     obj.x = x
     obj.y = y
@@ -26,6 +26,7 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox)
     obj.abox = abox
     obj.team = team or 2
     obj.alive = true
+    obj.sounds = sounds
     self.__index = self
 
     return setmetatable(obj, self)
@@ -49,7 +50,9 @@ function Actor:update(dt, stage)
         elseif love.keyboard.isDown("d") then self:move(5)
         elseif love.keyboard.isDown("space") then self:hit()
         elseif self.anim_state ~= "slash" or wrap == 1 then self:idle()
-        elseif self.anims.slash.currentFrame == 25 then stage:hit(self:get_box("att")) end
+        elseif self.anims.slash.currentFrame == 25 then 
+            if stage:hit(self:get_box("att")) then self.sounds.hit:play() end
+        end
     end
 end
 
@@ -76,7 +79,7 @@ end
 function Actor:get_hit()
     print("Hit detected")
     self.health = self.health - 1
-    if(self.health == 0) then print("Actor died") alive = false end
+    if(self.health == 0) then print("Actor died") alive = false self.sounds.ouch:play() end
 end
 
 function Actor:hit()
