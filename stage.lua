@@ -3,6 +3,7 @@ require 'stage_0'
 require 'stage_1'
 require 'stage_2'
 require 'stage_3'
+require 'stage_4'
 require 'camera'
 -- Global table for stuffing functions into it. Don't ever override Stage
 Stage = {}
@@ -57,6 +58,9 @@ function loadStage(index)
     end
     if index == 3 then
 	stage = stage_3()
+    end
+    if index == 4 then
+    	stage = stage_4()
     end
 end
 

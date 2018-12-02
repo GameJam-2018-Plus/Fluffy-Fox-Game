@@ -15,6 +15,11 @@ function menu (pause)
 		font = love.graphics.newFont("assets/fonts/BrookeS8.ttf" , 80)
 		love.graphics.setFont(font)
 		if (not pause) then
+		font = love.graphics.newFont("assets/fonts/BrookeS8.ttf" , 20)
+		love.graphics.setFont(font)
+			love.graphics.print("press 1-3 then e to start", 10, 10)
+			font = love.graphics.newFont("assets/fonts/BrookeS8.ttf" , 80)
+		love.graphics.setFont(font)
 			love.graphics.print("START GAME", 336, 352)
 			--love.graphics.rectangle("line", 334, 352, 360, 67)
 		end
