@@ -6,7 +6,6 @@ require 'stage_3'
 require 'camera'
 -- Global table for stuffing functions into it. Don't ever override Stage
 Stage = {}
-currentStage = 0
 
 -- Constructor for the stage
 function Stage:new(music, bg, walk_height, actors)

@@ -30,7 +30,6 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox, sounds)
     obj.sounds = sounds
     obj.vel = vel
     obj.xv = -5
-    obj.wrap = 0
     self.__index = self
 
     return setmetatable(obj, self)
@@ -60,7 +59,7 @@ function Actor:update(dt, stage)
         elseif love.keyboard.isDown("e") then self:get_hit()
         elseif self.anim_state ~= "slash" or wrap == 1 then self:idle()
         elseif self.anims.slash.currentFrame == 25 then 
-            if stage:hit(self:get_box("att")) then self.sounds.hit:play() end
+            if stage:hit(self:get_box("att")) then self.sounds.direct_hit:play() end
         end
     end
     local xx = self.x - stage:get_player().x
@@ -130,12 +129,12 @@ function Actor:die(dt)
         self.anims[self.anim_state]:reset()
         self.sounds.steps:stop()
         self.anim_state = "death"
-        self.wrap = self.anims[self.anim_state]:update(dt)
+        self.anims[self.anim_state]:update(dt)
     end
-    if self.wrap == 1 then 
-        loadStage(currentStage)
+    if self.anims.death.currentFrame == self.anims.death.numFrames then 
+        if self.team == 1 then loadStage(current_stage) end
     else
-        self.wrap = self.anims[self.anim_state]:update(dt)
+        self.anims[self.anim_state]:update(dt)
     end
 end
 
@@ -144,7 +143,9 @@ function Actor:get_hit()
     self.health = self.health - 1
     if(self.health == 0) then print("Actor died") 
         self.alive = false 
-        self.sounds.ouch:play() 
+        self.sounds.death:play() 
+    else
+        self.sounds.ouch:play()
     end
 end
 
@@ -161,6 +162,7 @@ function Actor:hit(xx)
         self.anims[self.anim_state]:reset()
     end
     self.anim_state = "slash"
+    self.sounds.hit:play()
     -- starts hitting movement
 end
 
