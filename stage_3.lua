@@ -15,6 +15,11 @@ function stage_3()
 
 	local bg = Animation:new("assets/bg/stage_3.png", 4096, 768,1)
         local actors = {}
-        table.insert(actors, Actor:new(0,400,'player',666,3,1,Hitbox:new(75,50,50,140),Hitbox:new(140,50,60,100),player_sounds))
+        table.insert(actors, Actor:new(0,500,'player',666,3,1,Hitbox:new(75,50,50,140),Hitbox:new(140,50,60,100),player_sounds))
+        table.insert(actors, Actor:new(800, 500, 'screw', 0,2,3,Hitbox:new(50,50,50,50),Hitbox:new(50,50,50,50),enemy_sounds))
+	table.insert(actors, Actor:new(1500, 550, 'teddy', 0,2,8,Hitbox:new(0,0,200,200),Hitbox:new(50,50,50,50),enemy_sounds))
+	table.insert(actors, Actor:new(100, 450, 'screw', 0,2,3,Hitbox:new(50,50,50,50),Hitbox:new(50,50,50,50),enemy_sounds))
+	table.insert(actors, Actor:new(400, 550, 'teddy', 0,2,8,Hitbox:new(0,0,200,200),Hitbox:new(50,50,50,50),enemy_sounds))
+	table.insert(actors, Actor:new(1300, 300, 'screw', 0,2,3,Hitbox:new(50,50,50,50),Hitbox:new(50,50,50,50),enemy_sounds))
         return Stage:new("assets/audio/Forest.ogg", bg, 200, actors)
 end
