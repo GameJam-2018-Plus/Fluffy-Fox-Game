@@ -17,6 +17,7 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox, sounds)
     obj.anims.idle = Animation:new( "/assets/"..anims_path .."/idle.png",def_w,def_h,def_duration)
     obj.anims.walk = Animation:new( "/assets/"..anims_path .."/walk.png",def_w,def_h,def_duration*2)
     obj.anims.slash = Animation:new("/assets/"..anims_path .."/slash.png",def_w,def_h,def_duration*3)
+    obj.anims.slash = Animation:new("/assets/"..anims_path .."/death.png",def_w,def_h,def_duration)
     obj.w, obj.h = def_w, def_h
     obj.anim_state = "idle"
     obj.facing = true
@@ -46,6 +47,10 @@ function Actor:draw(camera)
 end
 
 function Actor:update(dt, stage)
+    if not self.alive then
+        self:die()
+        return
+    end
     wrap = self.anims[self.anim_state]:update(dt)
     if self.team == 1 then
         if love.keyboard.isDown("a") then self:move(-5) 
@@ -118,10 +123,25 @@ function Actor:idle()
     self.anim_state = "idle"
 end
 
+function Actor:die()
+    if self.anim_state ~= "idle" then
+        self.anims[self.anim_state]:reset()
+        self.sounds.steps:stop()
+    end
+    if self.anims.death.currentFrame == self.anims.death.numFrames then
+
+    else
+        self.anims[self.anim_state]:update(dt)
+    end
+end
+
 function Actor:get_hit()
     print("Hit detected")
     self.health = self.health - 1
-    if(self.health == 0) then print("Actor died") alive = false self.sounds.ouch:play() end
+    if(self.health == 0) then print("Actor died") 
+        alive = false 
+        self.sounds.ouch:play() 
+    end
 end
 
 function Actor:hit(xx)
