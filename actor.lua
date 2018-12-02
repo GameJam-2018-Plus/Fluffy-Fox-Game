@@ -62,6 +62,7 @@ function Actor:move(x)
     end
     self.anim_state = "walk"
     self.x = self.x + x
+    self.sounds.steps:play()
     if x > 0 then
         self.facing = true
     else
@@ -72,6 +73,7 @@ end
 function Actor:idle()
     if self.anim_state ~= "idle" then
         self.anims[self.anim_state]:reset()
+        self.sounds.steps:stop()
     end
     self.anim_state = "idle"
 end
