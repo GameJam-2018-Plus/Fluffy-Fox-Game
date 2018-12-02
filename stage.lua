@@ -6,6 +6,7 @@ require 'stage_3'
 require 'camera'
 -- Global table for stuffing functions into it. Don't ever override Stage
 Stage = {}
+currentStage = 0
 
 -- Constructor for the stage
 function Stage:new(music, bg, walk_height, actors)
@@ -27,9 +28,6 @@ function Stage:update(dt)
     self.bg:update(dt)
     for _,a in pairs(self.actors) do
         a:update(dt,stage)
-    end
-    if not self:get_player().alive then
-        return current_stage
     end
     return -1
 end

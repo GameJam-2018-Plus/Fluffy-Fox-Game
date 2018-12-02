@@ -17,7 +17,7 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox, sounds)
     obj.anims.idle = Animation:new( "/assets/"..anims_path .."/idle.png",def_w,def_h,def_duration)
     obj.anims.walk = Animation:new( "/assets/"..anims_path .."/walk.png",def_w,def_h,def_duration*2)
     obj.anims.slash = Animation:new("/assets/"..anims_path .."/slash.png",def_w,def_h,def_duration*3)
-    obj.anims.slash = Animation:new("/assets/"..anims_path .."/death.png",def_w,def_h,def_duration)
+    obj.anims.death = Animation:new("/assets/"..anims_path .."/death.png",def_w,def_h,def_duration)
     obj.w, obj.h = def_w, def_h
     obj.anim_state = "idle"
     obj.facing = true
@@ -30,6 +30,7 @@ function Actor:new(x, y, anims_path, vel, max_health, team, hbox, abox, sounds)
     obj.sounds = sounds
     obj.vel = vel
     obj.xv = -5
+    obj.wrap = 0
     self.__index = self
 
     return setmetatable(obj, self)
@@ -48,7 +49,7 @@ end
 
 function Actor:update(dt, stage)
     if not self.alive then
-        self:die()
+        self:die(dt)
         return
     end
     wrap = self.anims[self.anim_state]:update(dt)
@@ -56,6 +57,7 @@ function Actor:update(dt, stage)
         if love.keyboard.isDown("a") then self:move(-5) 
         elseif love.keyboard.isDown("d") then self:move(5)
         elseif love.keyboard.isDown("space") then self:hit()
+        elseif love.keyboard.isDown("e") then self:get_hit()
         elseif self.anim_state ~= "slash" or wrap == 1 then self:idle()
         elseif self.anims.slash.currentFrame == 25 then 
             if stage:hit(self:get_box("att")) then self.sounds.hit:play() end
@@ -123,15 +125,17 @@ function Actor:idle()
     self.anim_state = "idle"
 end
 
-function Actor:die()
-    if self.anim_state ~= "idle" then
+function Actor:die(dt)
+    if self.anim_state ~= "death" then
         self.anims[self.anim_state]:reset()
         self.sounds.steps:stop()
+        self.anim_state = "death"
+        self.wrap = self.anims[self.anim_state]:update(dt)
     end
-    if self.anims.death.currentFrame == self.anims.death.numFrames then
-
+    if self.wrap == 1 then 
+        loadStage(currentStage)
     else
-        self.anims[self.anim_state]:update(dt)
+        self.wrap = self.anims[self.anim_state]:update(dt)
     end
 end
 
@@ -139,7 +143,7 @@ function Actor:get_hit()
     print("Hit detected")
     self.health = self.health - 1
     if(self.health == 0) then print("Actor died") 
-        alive = false 
+        self.alive = false 
         self.sounds.ouch:play() 
     end
 end
@@ -177,4 +181,3 @@ function Actor:get_box(ident)
         return Hitbox:new(self.hbox.x + self.x, self.hbox.y + self.y, self.hbox.w, self.hbox.h)
     end
 end
-
