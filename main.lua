@@ -76,6 +76,9 @@ function love.draw()
 						chVol = false
 					else
 						show_credits = true
+                        credit_music = love.audio.newSource("assets/audio/Credits.ogg", "stream")
+                        stage.music:stop()
+                        credit_music:play()
 					end
 				end
 				-- Back
@@ -90,6 +93,8 @@ function love.draw()
 			chVol = false
 			show_option = true
 			show_credits = false
+            credit_music:stop()
+            stage.music:play()
 			love.timer.sleep(.42)
 		else
 			local dark = love.graphics.newImage("assets/bg/pauseScreen.png")
